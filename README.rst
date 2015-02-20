@@ -2,7 +2,7 @@
 Docstirngviewer
 ================
 
-Docstringviewer is a Django app which displays docstrings or all python modules and objects
+Docstringviewer is a Django app which displays docstrings of all python modules and objects
 inside them for project. 
 
 Detailed documentation is in the "docs" directory.
