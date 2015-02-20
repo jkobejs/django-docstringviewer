@@ -29,7 +29,6 @@ Quick start
         'docstringviewer',
     ]
 
-
 2. Include the docstingviewerURLconf in your project urls.py like this::
 
    url(r'^docstringviewer/', include('docstringviewer.urls')),
