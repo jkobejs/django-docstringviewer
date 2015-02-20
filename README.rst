@@ -31,12 +31,12 @@ Quick start
 
 2. Include the docstingviewerURLconf in your project urls.py like this::
 
-   url(r'^docstringviewer/', include('docstringviewer.urls')),
+    url(r'^docstringviewer/', include('docstringviewer.urls')),
 
 3. Assign your project root to ``ROOT_DOCS_DIR`` in your settings file::
    
-   import os
+    import os
 
-   PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
-   ROOT_DOCS_DIR = PROJECT_ROOT
+    PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
+    ROOT_DOCS_DIR = PROJECT_ROOT
 
