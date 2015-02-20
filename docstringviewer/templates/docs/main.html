@@ -1,0 +1,111 @@
+{% extends 'docs/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'docs/css/bootstrap.min.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'docs/css/style.css' %}" type="text/css"/>
+{% endblock css %}
+
+{% block js %}
+    <script src="{% static 'docs/js/lib/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'docs/js/bootstrap.min.js' %}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $(".module").click(function (e) {
+                var module = e.target.name;
+                import_module(module)
+            });
+
+            $('#import-button').click(function (e) {
+                import_module($("#import").val());
+            });
+
+            $('#import').keydown(function (e) {
+                if (e.keyCode == 13) {
+                    import_module($("#import").val());
+                }
+            });
+
+            /***
+             * Gets module page form server and displays it inside .main_content div.
+             * @param module module to get
+             */
+            function import_module(module) {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'docstringviewer' %}",
+                    data: {module: module},
+                    success: function (newData) {
+                        $('.main_content').html(newData);
+                        $("#menu-toggle").on("click", function (e) {
+                            e.preventDefault();
+                            $("#wrapper").toggleClass("toggled");
+                        });
+                    }
+                });
+            }
+
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $('ul.nav-left-ml').toggle();
+            $('label.nav-toggle span').click(function () {
+                $(this).parent().parent().children('ul.nav-left-ml').toggle(300);
+                var cs = $(this).attr("class");
+                if (cs == 'nav-toggle-icon glyphicon glyphicon-chevron-right') {
+                    $(this).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
+                }
+                if (cs == 'nav-toggle-icon glyphicon glyphicon-chevron-down') {
+                    $(this).removeClass('glyphicon-});chevron-down').addClass('glyphicon-chevron-right');
+                }
+            });
+
+            $('[data-toggle="popover"]').popover();
+
+        });
+
+    </script>
+{% endblock js %}
+
+{% block content %}
+
+    <div id="wrapper">
+
+        <div id="sidebar-wrapper">
+            <div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-title"><span>Project tree</span></li>
+
+                    <div class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="re" id="import"
+                                   data-toggle="popover" data-trigger="hover click"
+                                   title="Import module"
+                                   data-placement="bottom"
+                                   data-content="Write name of any module that is installed inside your
+                                current environment. Click import button or press Enter and if module exists
+                                documentation for module will be shown.">
+
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" id="import-button">Import</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% for node in tree %}
+                        {% include "docs/tree_view_template.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="main_content">
+            {% include 'docs/docs.html' %}
+        </div>
+    </div>
+
+{% endblock content %}

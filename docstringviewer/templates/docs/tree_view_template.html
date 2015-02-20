@@ -1,0 +1,17 @@
+<li>
+    {% if node.import_path %}
+        <a class="module" name="{{ node.import_path }}">{{node.name}}</a>
+    {% else %}
+        <label class="nav-toggle nav-header"><span>{{node.name}}</span></label>
+    {% endif %}
+
+    {% if node.data %}
+        <ul class="nav nav-list nav-left-ml">
+         {% for item in node.data %}
+              {% with node=item template_name="docs/tree_view_template.html" %}
+                   {% include template_name %}
+              {% endwith %}
+         {% endfor %}
+         </ul>
+    {% endif %}
+</li>

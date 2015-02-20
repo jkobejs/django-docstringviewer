@@ -1,0 +1,109 @@
+<div id="module-sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li class="sidebar-title"><span>Index</span></li>
+        <li class="sidebar-brand"><span>Module variables</span></li>
+        {% if module_docs.variables %}
+            <ul>
+                {% for var_obj in module_docs.variables %}
+                    <li><a id="{{ var_obj.name }}">{{ var_obj.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <li><span>No module-level variables</span></li>
+        {% endif %}
+        <li class="sidebar-brand"><span>Functions</span></li>
+
+        {% if module_docs.functions %}
+            {% for fnc_obj in module_docs.functions %}
+                <li><a href="#{{ fnc_obj.name }}">{{ fnc_obj.name }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li><span>No module-level functions</span></li>
+        {% endif %}
+
+        <li class="sidebar-brand"><span>Classes</span></li>
+        {% if module_docs.classes %}
+            {% for cls_obj in module_docs.classes %}
+                <li><a href="#{{ cls_obj.name }}">{{ cls_obj.name }}</a></li>
+                {% if cls_obj.methods %}
+                    <ul>
+                        {% for method in cls_obj.methods %}
+                            <li><a href="#{{ cls_obj.name | lower }}-{{ method.name }}">{{ method.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <li><span>No module-level classes</span></li>
+        {% endif %}
+
+    </ul>
+</div>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="row">
+                    <a class="btn btn-default" id="menu-toggle">Toggle Tree</a>
+
+                    <h1>{{ module_docs.module.name }} module</h1>
+
+                    {% if module_docs.module.description %}
+                        <pre> {{ module_docs.module.description }}
+                    </pre>
+                    {% endif %}
+
+                    <hr>
+                </div>
+
+                <div class="row">
+                    <h2>Variables</h2>
+                    {% if module_docs.variables %}
+                        {% for var_obj in module_docs.variables %}
+                            <h3 id="{{ var_obj.name }}">{{ var_obj.name }}</h3>
+                            <p>{{ var_obj.description }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>There are no module-level variables in module.</p>
+                    {% endif %}
+                    <hr>
+                </div>
+
+                <div class="row">
+                    <h2>Functions</h2>
+                    {% if module_docs.functions %}
+                        {% for fnc_obj in module_docs.functions %}
+                            <h3 id="{{ fnc_obj.name }}">{{ fnc_obj.signature }}</h3>
+                            <pre>{{ fnc_obj.description }}</pre>
+                        {% endfor %}
+                    {% else %}
+                        <p>There are no functions in this module.</p>
+                    {% endif %}
+                    <hr>
+                </div>
+
+                <div class="row">
+                    <h2>Classes</h2>
+                    {% if module_docs.classes %}
+                        {% for cls_obj in module_docs.classes %}
+                            <h3 id="{{ cls_obj.name }}">{{ cls_obj.name }}</h3>
+                            <pre>{{ cls_obj.description }}</pre>
+                            {% if cls_obj.methods %}
+                                <h4>Methods</h4>
+                                {% for method in cls_obj.methods %}
+                                    <h5 id="{{ cls_obj.name | lower }}-{{ method.name }}">{{ method.signature }}</h5>
+                                    <pre>{{ method.description }}</pre>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <p>There are no classes in this module</p>
+                    {% endif %}
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
