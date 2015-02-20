@@ -10,9 +10,9 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='django-docstringviewer',
     version='0.1',
-    packages=['docstringviewer'],
+    packages=['docstringviewer', ],
     include_package_data=True,
-    license='BSD License',  # example license
+    license='New BSD License',  
     description='A Django app to view docstring of modules and its object inside project.',
     long_description=README,
     url='http://www.example.com/',
@@ -22,14 +22,10 @@ setup(
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License', # example license
+        'License :: OSI Approved :: BSD License', 
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        # Replace these appropriately if you are stuck on Python 2.
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Framework :: Djangp'
     ],
+    install_requires=['setuptools', 'django>=1.4',],
 )
